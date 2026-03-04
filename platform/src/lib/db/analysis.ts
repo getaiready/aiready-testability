@@ -18,13 +18,17 @@ export async function createAnalysis(analysis: Analysis): Promise<Analysis> {
   return analysis;
 }
 
-export async function listAnalyses(repoId: string): Promise<Analysis[]> {
+export async function listRepositoryAnalyses(
+  repoId: string,
+  limit = 20
+): Promise<Analysis[]> {
   const result = await doc.send(
     new QueryCommand({
       TableName: TABLE_NAME,
       KeyConditionExpression: 'PK = :pk',
       ExpressionAttributeValues: { ':pk': `ANALYSIS#${repoId}` },
       ScanIndexForward: false,
+      Limit: limit,
     })
   );
   return (result.Items || []) as Analysis[];

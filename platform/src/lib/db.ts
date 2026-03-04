@@ -11,6 +11,7 @@ export * from './db/users';
 export * from './db/teams';
 export * from './db/repositories';
 export * from './db/analysis';
+export * from './db/remediation';
 export * from './db/auth-utils';
 
 // Re-export specific common helpers if needed
@@ -38,9 +39,9 @@ export async function updateApiKeyLastUsed(
 }
 
 /**
- * Verify API key from raw key string
+ * Validate API key from raw key string
  */
-export async function verifyApiKey(
+export async function validateApiKey(
   rawKey: string
 ): Promise<{ userId: string; apiKeyId: string } | null> {
   const keyHash = createHash('sha256').update(rawKey).digest('hex');

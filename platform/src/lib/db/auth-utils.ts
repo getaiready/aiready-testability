@@ -66,38 +66,37 @@ export async function deleteApiKey(
 }
 
 // Magic Link operations
-export async function createMagicLinkToken(email: string): Promise<string> {
-  const token = randomBytes(32).toString('hex');
-  const expiresAt = new Date(Date.now() + 3600 * 1000).toISOString();
-  const item: MagicLinkToken = {
-    token,
-    email,
-    expiresAt,
-    used: false,
-    createdAt: new Date().toISOString(),
-  };
+export async function createMagicLinkToken(
+  tokenData: MagicLinkToken
+): Promise<string> {
   await doc.send(
     new PutCommand({
       TableName: TABLE_NAME,
-      Item: { PK: `MAGIC#${token}`, SK: '#METADATA', ...item },
+      Item: { PK: `MAGIC#${tokenData.token}`, SK: '#METADATA', ...tokenData },
     })
   );
-  return token;
+  return tokenData.token;
 }
 
-// Remediation operations
-export async function createRemediations(
-  repoId: string,
-  requests: RemediationRequest[]
-): Promise<void> {
-  for (const req of requests) {
-    const item = {
-      PK: `REPO#${repoId}`,
-      SK: `REMEDIATION#${req.id}`,
-      GSI2PK: `REMEDIATION#${repoId}`,
-      GSI2SK: req.createdAt,
-      ...req,
-    };
-    await doc.send(new PutCommand({ TableName: TABLE_NAME, Item: item }));
-  }
+export async function getMagicLinkToken(
+  token: string
+): Promise<MagicLinkToken | null> {
+  const result = await doc.send(
+    new GetCommand({
+      TableName: TABLE_NAME,
+      Key: { PK: `MAGIC#${token}`, SK: '#METADATA' },
+    })
+  );
+  return (result.Item as MagicLinkToken) || null;
+}
+
+export async function markMagicLinkUsed(token: string): Promise<void> {
+  await doc.send(
+    new UpdateCommand({
+      TableName: TABLE_NAME,
+      Key: { PK: `MAGIC#${token}`, SK: '#METADATA' },
+      UpdateExpression: 'SET used = :u',
+      ExpressionAttributeValues: { ':u': true },
+    })
+  );
 }

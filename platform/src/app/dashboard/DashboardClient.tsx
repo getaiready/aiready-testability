@@ -1007,7 +1007,7 @@ function RepoCard({
 
       {/* Actions */}
       <div className="flex flex-col gap-3 pt-3 border-t border-slate-700/50">
-        <div className="flex gap-2">
+        <div className="grid grid-cols-2 gap-3">
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -1028,22 +1028,9 @@ function RepoCard({
             <UploadIcon className="w-3.5 h-3.5" />
             {uploading ? 'Uploading...' : 'Upload'}
           </motion.button>
-        </div>
 
-        {analysis && (
-          <div className="space-y-4">
-            <Link href={`/dashboard/repo/${repo.id}`}>
-              <motion.button
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                className="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-indigo-500 text-white text-xs font-black uppercase tracking-widest rounded-lg hover:bg-indigo-600 transition-all shadow-lg shadow-indigo-500/20 border border-indigo-400/30"
-              >
-                <ChartIcon className="w-3.5 h-3.5" />
-                View Report Details
-              </motion.button>
-            </Link>
-
-            <div className="grid grid-cols-2 gap-3">
+          {analysis && (
+            <>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -1066,8 +1053,21 @@ function RepoCard({
                   Map
                 </motion.button>
               </Link>
-            </div>
-          </div>
+            </>
+          )}
+        </div>
+
+        {analysis && (
+          <Link href={`/dashboard/repo/${repo.id}`} className="block">
+            <motion.button
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              className="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-indigo-500 text-white text-xs font-black uppercase tracking-widest rounded-lg hover:bg-indigo-600 transition-all shadow-lg shadow-indigo-500/20 border border-indigo-400/30"
+            >
+              <ChartIcon className="w-3.5 h-3.5" />
+              View Report Details
+            </motion.button>
+          </Link>
         )}
 
         <div className="flex items-center justify-between gap-2">
