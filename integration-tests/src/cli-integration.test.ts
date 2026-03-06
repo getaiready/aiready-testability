@@ -49,6 +49,39 @@ describe('CLI Registry Integration', () => {
     console.log('DEBUG: results keys:', Object.keys(results));
 
     // Ensure all tools were at least attempted
+    // Verify key mappings for backward compatibility
+    expect(results).toHaveProperty('pattern-detect');
+    expect(results).toHaveProperty('patternDetect');
+    expect(results).toHaveProperty('patterns');
+
+    expect(results).toHaveProperty('context-analyzer');
+    expect(results).toHaveProperty('contextAnalyzer');
+    expect(results).toHaveProperty('context');
+
+    expect(results).toHaveProperty('naming-consistency');
+    expect(results).toHaveProperty('namingConsistency');
+    expect(results).toHaveProperty('consistency');
+
+    expect(results).toHaveProperty('ai-signal-clarity');
+    expect(results).toHaveProperty('aiSignalClarity');
+
+    expect(results).toHaveProperty('agent-grounding');
+    expect(results).toHaveProperty('agentGrounding');
+
+    expect(results).toHaveProperty('testability-index');
+    expect(results).toHaveProperty('testabilityIndex');
+    expect(results).toHaveProperty('testability');
+
+    expect(results).toHaveProperty('doc-drift');
+    expect(results).toHaveProperty('docDrift');
+
+    expect(results).toHaveProperty('dependency-health');
+    expect(results).toHaveProperty('dependencyHealth');
+    expect(results).toHaveProperty('deps');
+
+    expect(results).toHaveProperty('change-amplification');
+    expect(results).toHaveProperty('changeAmplification');
+
     for (const toolId of implementedTools) {
       expect(results.summary.toolsRun).toContain(toolId);
       expect((results as any)[toolId]).toBeDefined();
