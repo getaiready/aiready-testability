@@ -5,6 +5,7 @@ import {
   BusinessMetrics,
 } from '../types';
 import { severityColors, edgeColors } from '../constants';
+import { ScoreCircle, GlassCard, GlassCardContent } from '@aiready/components';
 
 
 // Legend Item with Toggle
@@ -122,6 +123,17 @@ export function LegendPanel({
   return (
     <div style={{ padding: '16px 16px', animation: 'fadeIn 0.2s ease-in' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* Score Section */}
+        {metadata && metadata.aiReadinessScore !== undefined && (
+          <div className="flex flex-col items-center justify-center p-4 border-b" style={{ borderColor: colors.panelBorder }}>
+            <ScoreCircle 
+              score={Math.round(metadata.aiReadinessScore * 100)} 
+              size="md" 
+              className="mb-2"
+            />
+          </div>
+        )}
+
         {/* Header */}
         <div
           style={{
@@ -136,7 +148,6 @@ export function LegendPanel({
             Legend
           </h2>
         </div>
-
         {/* Severity Legend with Toggles */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div
@@ -286,75 +297,67 @@ export function LegendPanel({
               >
                 Business Impact
               </h3>
-              <div
-                className="p-3 rounded-xl"
-                style={{
-                  backgroundColor: `${colors.cardBg}80`,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '6px',
-                }}
-              >
-                {metadata.estimatedMonthlyCost !== undefined && (
-                  <div className="flex justify-between items-center py-1 px-2 rounded-lg hover:bg-white/5 transition-colors">
-                    <span
-                      className="text-xs font-medium"
-                      style={{ color: colors.textMuted }}
-                    >
-                      💰 Monthly Cost
-                    </span>
-                    <span
-                      className="text-xs font-bold"
-                      style={{ color: '#f59e0b' }}
-                    >
-                      {metadata.estimatedMonthlyCost >= 1000
-                        ? `$${(metadata.estimatedMonthlyCost / 1000).toFixed(1)}k`
-                        : `$${metadata.estimatedMonthlyCost.toFixed(0)}`}
-                    </span>
-                  </div>
-                )}
-                {metadata.estimatedDeveloperHours !== undefined && (
-                  <div className="flex justify-between items-center py-1 px-2 rounded-lg hover:bg-white/5 transition-colors">
-                    <span
-                      className="text-xs font-medium"
-                      style={{ color: colors.textMuted }}
-                    >
-                      ⏱️ Fix Time
-                    </span>
-                    <span
-                      className="text-xs font-bold"
-                      style={{ color: '#22d3ee' }}
-                    >
-                      {metadata.estimatedDeveloperHours >= 40
-                        ? `${(metadata.estimatedDeveloperHours / 40).toFixed(1)}w`
-                        : `${metadata.estimatedDeveloperHours.toFixed(1)}h`}
-                    </span>
-                  </div>
-                )}
-                {metadata.aiAcceptanceRate !== undefined && (
-                  <div className="flex justify-between items-center py-1 px-2 rounded-lg hover:bg-white/5 transition-colors">
-                    <span
-                      className="text-xs font-medium"
-                      style={{ color: colors.textMuted }}
-                    >
-                      🤖 AI Acceptance
-                    </span>
-                    <span
-                      className="text-xs font-bold"
-                      style={{
-                        color:
-                          metadata.aiAcceptanceRate >= 0.7
-                            ? '#4ade80'
-                            : metadata.aiAcceptanceRate >= 0.5
-                              ? '#fb923c'
-                              : '#f87171',
-                      }}
-                    >
-                      {Math.round(metadata.aiAcceptanceRate * 100)}%
-                    </span>
-                  </div>
-                )}
-              </div>
+              <GlassCard className="border-indigo-500/10">
+                <GlassCardContent className="p-3 flex flex-col gap-2">
+                  {metadata.estimatedMonthlyCost !== undefined && (
+                    <div className="flex justify-between items-center py-1 px-2 rounded-lg hover:bg-white/5 transition-colors">
+                      <span
+                        className="text-[10px] font-bold uppercase tracking-wider"
+                        style={{ color: colors.textMuted }}
+                      >
+                        Monthly Cost
+                      </span>
+                      <span
+                        className="text-xs font-black text-amber-500"
+                      >
+                        {metadata.estimatedMonthlyCost >= 1000
+                          ? `$${(metadata.estimatedMonthlyCost / 1000).toFixed(1)}k`
+                          : `$${metadata.estimatedMonthlyCost.toFixed(0)}`}
+                      </span>
+                    </div>
+                  )}
+                  {metadata.estimatedDeveloperHours !== undefined && (
+                    <div className="flex justify-between items-center py-1 px-2 rounded-lg hover:bg-white/5 transition-colors">
+                      <span
+                        className="text-[10px] font-bold uppercase tracking-wider"
+                        style={{ color: colors.textMuted }}
+                      >
+                        Fix Time
+                      </span>
+                      <span
+                        className="text-xs font-black text-cyan-400"
+                      >
+                        {metadata.estimatedDeveloperHours >= 40
+                          ? `${(metadata.estimatedDeveloperHours / 40).toFixed(1)}w`
+                          : `${metadata.estimatedDeveloperHours.toFixed(1)}h`}
+                      </span>
+                    </div>
+                  )}
+                  {metadata.aiAcceptanceRate !== undefined && (
+                    <div className="flex justify-between items-center py-1 px-2 rounded-lg hover:bg-white/5 transition-colors">
+                      <span
+                        className="text-[10px] font-bold uppercase tracking-wider"
+                        style={{ color: colors.textMuted }}
+                      >
+                        AI Accuracy
+                      </span>
+                      <span
+                        className="text-xs font-black"
+                        style={{
+                          color:
+                            metadata.aiAcceptanceRate >= 0.7
+                              ? '#10b981'
+                              : metadata.aiAcceptanceRate >= 0.5
+                                ? '#f59e0b'
+                                : '#ef4444',
+                        }}
+                      >
+                        {Math.round(metadata.aiAcceptanceRate * 100)}%
+                      </span>
+                    </div>
+                  )}
+                </GlassCardContent>
+              </GlassCard>
             </div>
           )}
 

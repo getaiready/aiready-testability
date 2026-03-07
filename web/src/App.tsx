@@ -7,6 +7,8 @@ import { useTheme } from './hooks/useTheme';
 import {
   LoadingSpinner,
   ErrorDisplay,
+} from '@aiready/components';
+import {
   Navbar,
   LegendPanel,
   NodeDetails,
@@ -151,12 +153,12 @@ function App() {
 
   // Handle loading state
   if (loading) {
-    return <LoadingSpinner colors={colors} />;
+    return <LoadingSpinner />;
   }
 
   // Handle error state
   if (error) {
-    return <ErrorDisplay colors={colors} error={error} />;
+    return <ErrorDisplay message={error} />;
   }
 
   return (
