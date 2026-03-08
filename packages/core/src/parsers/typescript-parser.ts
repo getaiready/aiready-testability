@@ -302,9 +302,14 @@ export class TypeScriptParser implements LanguageParser {
       exports.push({
         name: declaration.id.name,
         type: 'function',
-        parameters: declaration.params.map((p: any) =>
-          p.type === 'Identifier' ? p.name : 'unknown'
-        ),
+        parameters: declaration.params.map((p: any) => {
+          if (p.type === 'Identifier') return p.name;
+          if (p.type === 'AssignmentPattern' && p.left.type === 'Identifier')
+            return p.left.name;
+          if (p.type === 'RestElement' && p.argument.type === 'Identifier')
+            return p.argument.name;
+          return 'unknown';
+        }),
         loc: declaration.loc
           ? {
               start: {
