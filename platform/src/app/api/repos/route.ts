@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { auth } from '@/app/api/auth/[...nextauth]/route';
 import {
@@ -13,14 +13,15 @@ import { planLimits, MVP_FREE_ONLY } from '@/lib/plans';
 import { randomUUID } from 'crypto';
 
 import { validateApiKey } from '@/lib/db';
+import { withApiHandler } from '@/lib/api/handler';
 
 // GET /api/repos - List repositories
 export async function GET(request: NextRequest) {
-  try {
+  return withApiHandler(async (req) => {
     let userId: string | undefined;
 
     // 1. Check for API key (Authorization: Bearer <key>)
-    const authHeader = request.headers.get('Authorization');
+    const authHeader = req.headers.get('Authorization');
     if (authHeader?.startsWith('Bearer ')) {
       const apiKey = authHeader.substring(7);
       const validation = await validateApiKey(apiKey);
@@ -35,19 +36,15 @@ export async function GET(request: NextRequest) {
       userId = session?.user?.id;
     }
 
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    if (!userId) return { status: 401, error: 'Unauthorized' };
 
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = new URL(req.url);
     const teamId = searchParams.get('teamId');
 
-    // List of repositories
     const repos = teamId
       ? await listTeamRepositories(teamId)
       : await listUserRepositories(userId);
 
-    // Attach latest analysis to each repo
     const reposWithAnalysis = await Promise.all(
       repos.map(async (repo) => {
         const latestAnalysis = await getLatestAnalysis(repo.id);
@@ -55,73 +52,49 @@ export async function GET(request: NextRequest) {
       })
     );
 
-    const maxRepos = planLimits.free.maxRepos; // 3 repos for free tier (default)
+    const maxRepos = planLimits.free.maxRepos;
 
-    return NextResponse.json({
+    return {
       repos: reposWithAnalysis,
       limits: {
         maxRepos,
         currentCount: repos.length,
         remaining: maxRepos - repos.length,
       },
-    });
-  } catch (error) {
-    console.error('Error listing repositories:', error);
-    return NextResponse.json(
-      { error: 'Failed to list repositories' },
-      { status: 500 }
-    );
-  }
+    };
+  }, request);
 }
 
 // POST /api/repos - Create a new repository
 export async function POST(request: NextRequest) {
-  try {
+  return withApiHandler(async (req) => {
     const session = await auth();
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    if (!session?.user?.id) return { status: 401, error: 'Unauthorized' };
 
-    const body = await request.json();
+    const body = await req.json();
     const { name, url, description, defaultBranch = 'main', teamId } = body;
 
-    if (!name || !url) {
-      return NextResponse.json(
-        { error: 'Name and URL are required' },
-        { status: 400 }
-      );
-    }
+    if (!name || !url)
+      return { status: 400, error: 'Name and URL are required' };
 
-    // Validate URL is a valid git repository URL
-    const urlPattern = /^(https?:\/\/|git@)[\w.@:\/-]+$/;
-    if (!urlPattern.test(url)) {
-      return NextResponse.json(
-        { error: 'Invalid repository URL' },
-        { status: 400 }
-      );
-    }
+    const urlPattern = /^(https?:\/\/|git@)[\w.@:\/\-]+$/;
+    if (!urlPattern.test(url))
+      return { status: 400, error: 'Invalid repository URL' };
 
-    // Check repo limit
     let existingRepos;
-    if (teamId) {
-      existingRepos = await listTeamRepositories(teamId);
-    } else {
-      existingRepos = await listUserRepositories(session.user.id);
-    }
+    if (teamId) existingRepos = await listTeamRepositories(teamId);
+    else existingRepos = await listUserRepositories(session.user.id);
 
-    const maxRepos = planLimits.free.maxRepos; // 3 repos for free tier
-
+    const maxRepos = planLimits.free.maxRepos;
     if (existingRepos.length >= maxRepos) {
-      return NextResponse.json(
-        {
-          error: `Limit reached. You have ${existingRepos.length} repositories.`,
-          code: 'REPO_LIMIT_REACHED',
-          currentCount: existingRepos.length,
-          maxRepos,
-          upgradeUrl: '/pricing',
-        },
-        { status: 403 }
-      );
+      return {
+        status: 403,
+        error: `Limit reached. You have ${existingRepos.length} repositories.`,
+        code: 'REPO_LIMIT_REACHED',
+        currentCount: existingRepos.length,
+        maxRepos,
+        upgradeUrl: '/pricing',
+      };
     }
 
     const repo = await createRepository({
@@ -138,62 +111,31 @@ export async function POST(request: NextRequest) {
 
     revalidatePath('/dashboard');
 
-    // Return repo with remaining count
-    return NextResponse.json(
-      {
-        repo,
-        reposRemaining: maxRepos - existingRepos.length - 1,
-      },
-      { status: 201 }
-    );
-  } catch (error) {
-    console.error('Error creating repository:', error);
-    return NextResponse.json(
-      { error: 'Failed to create repository' },
-      { status: 500 }
-    );
-  }
+    return {
+      status: 201,
+      repo,
+      reposRemaining: maxRepos - existingRepos.length - 1,
+    };
+  }, request);
 }
 
 // DELETE /api/repos?id=<repoId> - Delete a repository
 export async function DELETE(request: NextRequest) {
-  try {
+  return withApiHandler(async (req) => {
     const session = await auth();
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    if (!session?.user?.id) return { status: 401, error: 'Unauthorized' };
 
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = new URL(req.url);
     const repoId = searchParams.get('id');
+    if (!repoId) return { status: 400, error: 'Repository ID is required' };
 
-    if (!repoId) {
-      return NextResponse.json(
-        { error: 'Repository ID is required' },
-        { status: 400 }
-      );
-    }
-
-    // Verify ownership
     const repo = await getRepository(repoId);
-    if (!repo) {
-      return NextResponse.json(
-        { error: 'Repository not found' },
-        { status: 404 }
-      );
-    }
-
-    if (repo.userId !== session.user.id) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
+    if (!repo) return { status: 404, error: 'Repository not found' };
+    if (repo.userId !== session.user.id)
+      return { status: 403, error: 'Forbidden' };
 
     await deleteRepository(repoId);
     revalidatePath('/dashboard');
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error deleting repository:', error);
-    return NextResponse.json(
-      { error: 'Failed to delete repository' },
-      { status: 500 }
-    );
-  }
+    return { success: true };
+  }, request);
 }
