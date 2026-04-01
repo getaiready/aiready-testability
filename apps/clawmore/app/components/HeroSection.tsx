@@ -43,17 +43,19 @@ export default function HeroSection({ onOpenBeta }: HeroSectionProps) {
           <span>Automated AWS Management • AI-Powered Fixes</span>
         </div>
 
-        <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter mb-4 sm:mb-10 bg-gradient-to-r from-[#00e0ff] to-[#bc00ff] bg-clip-text text-transparent leading-[1.1] sm:leading-[1.1] pb-3 sm:pb-4 drop-shadow-[0_10px_60px_rgba(0,0,0,1)]">
-          Your AWS Infrastructure
+        <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter mb-4 sm:mb-10 bg-gradient-to-r from-[#00e0ff] to-[#bc00ff] bg-clip-text text-transparent leading-[1.1] sm:leading-[1.1] pb-3 sm:pb-4 drop-shadow-[0_10px_60px_rgba(0,0,0,1)]">
+          OpenClaw
           <br />
-          <span className="italic">Manages Itself</span>
+          <span className="italic text-2xl sm:text-4xl md:text-5xl lg:text-6xl block mt-4 opacity-90">
+            Self-Evolving. Infinitely Scaling. Zero Idle Cost.
+          </span>
         </h1>
 
-        <p className="text-2xl sm:text-2xl text-white/90 max-w-3xl mx-auto mb-10 sm:mb-14 leading-relaxed font-light drop-shadow-[0_2px_10px_rgba(0,0,0,1)]">
-          The world's first platform for{' '}
-          <strong>Multi-Human Multi-Agent Collaboration</strong>. ClawMore
-          automatically monitors, optimizes, and evolves your AWS infrastructure
-          through autonomous agentic swarms.
+        <p className="text-xl sm:text-2xl text-white/90 max-w-4xl mx-auto mb-10 sm:mb-14 leading-relaxed font-light drop-shadow-[0_2px_10px_rgba(0,0,0,1)]">
+          The first autonomous system for{' '}
+          <strong>Multi-Human Multi-Agent Collaboration</strong>. OpenClaw
+          automatically synthesizes, optimizes, and evolves your AWS
+          infrastructure through agentic swarms that scale only when needed.
         </p>
 
         <div className="w-full max-w-lg sm:max-w-none flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 sm:gap-8">

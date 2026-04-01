@@ -43,7 +43,7 @@ export default function FAQ({
                   }
                   className="w-full flex items-center justify-between p-4 sm:p-6 text-left"
                 >
-                  <span className="font-mono text-[11px] sm:text-xs uppercase tracking-wider sm:tracking-widest text-zinc-200">
+                  <span className="font-mono text-[11px] sm:text-xs tracking-wider sm:tracking-widest text-zinc-200">
                     {item.question}
                   </span>
                   {openIndex === index ? (

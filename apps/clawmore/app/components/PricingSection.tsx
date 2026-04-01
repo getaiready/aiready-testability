@@ -20,56 +20,46 @@ export default function PricingSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {/* Free Tier */}
-          <div className="glass-card p-6 sm:p-8 flex flex-col border-white/10 hover:border-white/20 transition-all">
+          {/* OSS Tier */}
+          <div className="glass-card p-6 sm:p-8 flex flex-col border-white/10 hover:border-white/20 transition-all opacity-80">
             <div className="mb-8">
               <h4 className="text-zinc-400 font-mono text-xs uppercase tracking-widest font-black mb-2">
-                Free
+                Open Source
               </h4>
-              <div className="text-4xl sm:text-5xl font-black tracking-tight text-white">
-                $0
-                <span className="text-xl font-normal text-zinc-500">
-                  /month
-                </span>
+              <div className="text-4xl sm:text-5xl font-black tracking-tight text-white/70">
+                OSS
               </div>
               <p className="text-[10px] font-mono text-zinc-500 uppercase mt-3 tracking-tighter font-bold">
-                Perfect for trying out ClawMore
+                Self-host OpenClaw for free
               </p>
             </div>
             <ul className="space-y-4 mb-10 flex-grow">
-              <li className="flex items-center gap-3 text-sm text-zinc-100">
-                <Zap className="w-4 h-4 text-zinc-400 shrink-0" /> 3
-                repositories
+              <li className="flex items-center gap-3 text-sm text-zinc-400">
+                <Zap className="w-4 h-4 text-zinc-600 shrink-0" /> Full source
+                code
               </li>
-              <li className="flex items-center gap-3 text-sm text-zinc-100">
-                <Zap className="w-4 h-4 text-zinc-400 shrink-0" /> 10 scans per
-                month
-              </li>
-              <li className="flex items-center gap-3 text-sm text-zinc-100">
-                <Zap className="w-4 h-4 text-zinc-400 shrink-0" /> Basic
-                reporting
-              </li>
-              <li className="flex items-center gap-3 text-sm text-zinc-100">
-                <Zap className="w-4 h-4 text-zinc-400 shrink-0" /> Community
+              <li className="flex items-center gap-3 text-sm text-zinc-400">
+                <Zap className="w-4 h-4 text-zinc-600 shrink-0" /> Community
                 support
+              </li>
+              <li className="flex items-center gap-3 text-sm text-zinc-400">
+                <Zap className="w-4 h-4 text-zinc-600 shrink-0" /> 100% data
+                sovereignty
               </li>
             </ul>
             <Link
-              href="/signup"
-              className="w-full py-4 rounded-sm bg-white hover:bg-zinc-200 transition-all text-black text-xs font-black uppercase text-center tracking-widest"
+              href="https://github.com/getaiready/aiready-cli"
+              className="w-full py-4 rounded-sm border border-white/10 hover:bg-white/5 transition-all text-white text-xs font-black uppercase text-center tracking-widest"
             >
-              Start Free
+              View on GitHub
             </Link>
           </div>
 
-          {/* Pro Tier - MOST POPULAR */}
+          {/* Solo Tier */}
           <div className="glass-card p-6 sm:p-8 border-cyber-blue/30 bg-cyber-blue/[0.03] relative flex flex-col hover:border-cyber-blue/50 transition-all shadow-[0_0_80px_rgba(0,224,255,0.08)]">
-            <div className="absolute top-0 right-4 sm:right-8 -translate-y-1/2 px-3 py-1.5 rounded-sm bg-cyber-blue text-black text-[9px] font-black uppercase tracking-[0.3em] shadow-[0_0_20px_rgba(0,224,255,0.3)] z-10">
-              Most Popular
-            </div>
             <div className="mb-8">
               <h4 className="text-cyber-blue font-mono text-xs uppercase tracking-widest font-black mb-2">
-                Pro
+                Solo
               </h4>
               <div className="text-4xl sm:text-5xl font-black tracking-tight text-white">
                 $29
@@ -78,7 +68,7 @@ export default function PricingSection() {
                 </span>
               </div>
               <p className="text-[10px] font-mono text-cyber-blue uppercase mt-3 tracking-tighter font-bold">
-                For growing teams and projects
+                For individual developers
               </p>
             </div>
             <ul className="space-y-4 mb-10 flex-grow">
@@ -95,10 +85,6 @@ export default function PricingSection() {
                 AI credits
               </li>
               <li className="flex items-center gap-3 text-sm text-zinc-100">
-                <Zap className="w-4 h-4 text-cyber-blue shrink-0" /> Auto-fix
-                capabilities
-              </li>
-              <li className="flex items-center gap-3 text-sm text-zinc-100">
                 <Zap className="w-4 h-4 text-cyber-blue shrink-0" /> Priority
                 support
               </li>
@@ -107,54 +93,63 @@ export default function PricingSection() {
               href="/signup"
               className="w-full py-4 rounded-sm bg-cyber-blue hover:bg-cyber-blue/90 transition-all text-black text-xs font-black uppercase text-center tracking-widest shadow-[0_0_25px_rgba(0,224,255,0.2)]"
             >
-              Start 14-Day Free Trial
+              Start Managed Solo
             </Link>
           </div>
 
-          {/* Team Tier */}
-          <div className="glass-card p-6 sm:p-8 flex flex-col border-amber-500/20 bg-amber-500/[0.02] hover:border-amber-500/40 transition-all">
-            <div className="mb-8">
-              <h4 className="text-amber-400 font-mono text-xs uppercase tracking-widest font-black mb-2">
-                Team
-              </h4>
-              <div className="text-4xl sm:text-5xl font-black tracking-tight text-white">
-                $99
-                <span className="text-xl font-normal text-zinc-500">
-                  /month
-                </span>
+          {/* Team/Enterprise Column */}
+          <div className="flex flex-col gap-6">
+            {/* Team Tier */}
+            <div className="glass-card p-6 border-amber-500/20 bg-amber-500/[0.02] hover:border-amber-500/40 transition-all">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h4 className="text-amber-400 font-mono text-xs uppercase tracking-widest font-black mb-1">
+                    Team
+                  </h4>
+                  <div className="text-3xl font-black tracking-tight text-white">
+                    $99
+                    <span className="text-sm font-normal text-zinc-500">
+                      /month
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  href="/signup"
+                  className="px-4 py-2 rounded-sm bg-amber-500 hover:bg-amber-400 transition-all text-black text-[10px] font-black uppercase tracking-widest"
+                >
+                  Join
+                </Link>
               </div>
-              <p className="text-[10px] font-mono text-amber-400/70 uppercase mt-3 tracking-tighter font-bold">
-                For enterprises and large teams
+              <p className="text-[10px] font-mono text-amber-400/70 uppercase tracking-tighter font-bold">
+                For startups & teams
               </p>
             </div>
-            <ul className="space-y-4 mb-10 flex-grow">
-              <li className="flex items-center gap-3 text-sm text-zinc-100">
-                <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />{' '}
-                Everything in Pro
-              </li>
-              <li className="flex items-center gap-3 text-sm text-zinc-100">
-                <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" /> SSO
-                integration
-              </li>
-              <li className="flex items-center gap-3 text-sm text-zinc-100">
-                <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />{' '}
-                Audit logs
-              </li>
-              <li className="flex items-center gap-3 text-sm text-zinc-100">
-                <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />{' '}
-                Custom integrations
-              </li>
-              <li className="flex items-center gap-3 text-sm text-zinc-100">
-                <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />{' '}
-                Dedicated support
-              </li>
-            </ul>
-            <Link
-              href="/signup"
-              className="w-full py-4 rounded-sm bg-amber-500 hover:bg-amber-400 transition-all text-black text-xs font-black uppercase text-center tracking-widest"
-            >
-              Contact Sales
-            </Link>
+
+            {/* Enterprise Tier */}
+            <div className="glass-card p-6 border-cyber-purple/20 bg-cyber-purple/[0.02] hover:border-cyber-purple/40 transition-all">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h4 className="text-cyber-purple font-mono text-xs uppercase tracking-widest font-black mb-1">
+                    Enterprise
+                  </h4>
+                  <div className="text-3xl font-black tracking-tight text-white">
+                    $299
+                    <span className="text-sm font-normal text-zinc-500">
+                      /month
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  href="/signup"
+                  className="px-4 py-2 rounded-sm bg-cyber-purple hover:bg-cyber-purple/90 transition-all text-black text-[10px] font-black uppercase tracking-widest"
+                >
+                  Scale
+                </Link>
+              </div>
+              <p className="text-[10px] font-mono text-cyber-purple/70 uppercase tracking-tighter font-bold">
+                For large scale swarms
+              </p>
+            </div>
           </div>
         </div>
 

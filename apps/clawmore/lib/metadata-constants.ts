@@ -72,18 +72,18 @@ export const FAQ_JSON_LD = {
     },
     {
       '@type': 'Question',
-      name: 'What does the $29/month include?',
+      name: 'What does the $29/month Solo plan include?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Your subscription includes managed infrastructure, a web dashboard, automated code improvements, CI/CD integration, and $10/month in AI credits for code fixes. You can cancel anytime.',
+        text: 'The Solo plan includes managed infrastructure, a web dashboard, unlimited repositories, priority support, and $10/month in AI credits for code fixes. You can cancel anytime.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Can I try it for free?',
+      name: 'Can I use it for free?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Absolutely. The free tier includes our full analysis CLI, 3 repositories, and 10 scans per month. No credit card required. Upgrade when you are ready.',
+        text: 'Yes. OpenClaw is open-source. You can self-host the entire stack for free. Our managed plans (Solo, Team, Enterprise) provide a hosted dashboard, maintenance, and AI credits.',
       },
     },
   ],
@@ -106,14 +106,14 @@ export const FAQ_ITEMS = [
       'Absolutely. ClawMore uses read-only permissions by default and follows the principle of least privilege. Your code and data stay in your AWS account. We never access your sensitive information, and you can revoke access at any time.',
   },
   {
-    question: 'What does the $29/month Pro plan include?',
+    question: 'What does the $29/month Solo plan include?',
     answer:
-      "The Pro plan includes unlimited repositories and scans, $10/month in AI credits for auto-fixes, priority support, and advanced monitoring. It's perfect for growing teams who want to automate their infrastructure management.",
+      "The Solo plan includes unlimited repositories and scans, $10/month in AI credits for auto-fixes, priority support, and advanced monitoring. It's perfect for individual developers who want to automate their infrastructure management.",
   },
   {
-    question: 'Can I try it for free?',
+    question: 'Can I use it for free?',
     answer:
-      'Yes! We offer a free tier with 3 repositories and 10 scans per month - no credit card required. You can also start a 14-day free trial of our Pro plan to experience all features before committing.',
+      'Yes! OpenClaw is open-source. You can self-host the stack yourself for free. We offer managed plans starting at $29/month if you want us to handle the infrastructure, updates, and provide a web-based management console.',
   },
   {
     question: "What happens if I'm not satisfied?",

@@ -8,10 +8,10 @@
   },
   "hero": {
     "badge": "Autonomous Infrastructure Platform",
-    "title1": "Self-Healing,",
+    "title1": "OpenClaw:",
     "title2": "Self-Evolving",
-    "title3": "Claw",
-    "description": "ClawMore monitors your AWS infrastructure, detects issues, and automatically applies fixes — while you sleep."
+    "title3": "Infinitely Scaling",
+    "description": "The first autonomous system for Multi-Human Multi-Agent Collaboration. OpenClaw automatically synthesizes, optimizes, and evolves your AWS infrastructure."
   },
   "pillars": {
     "autonomous": {
@@ -60,26 +60,25 @@
     "title": "Start Free, Scale When Ready",
     "subtitle": "Open-source stack available for self-hosting. Cancel anytime.",
     "community": {
-      "name": "Free",
+      "name": "OSS",
       "badge": "OPEN SOURCE",
       "price": "FREE",
-      "subtext": "Self-hosted, forever free",
+      "subtext": "Self-hosted OpenClaw",
       "features": [
-        "Full analysis engine (CLI)",
-        "3 repositories",
-        "10 scans per month",
-        "7-day history",
-        "Community support"
+        "Full source code",
+        "Community support",
+        "100% data sovereignty",
+        "Unlimited local scans"
       ]
     },
     "managed": {
-      "name": "Starter",
+      "name": "Solo",
       "badge": "",
       "price": "$29",
       "period": "/mo",
-      "subtext": "Dashboard + AI fixes",
+      "subtext": "For individuals",
       "features": [
-        "5 repositories",
+        "Unlimited repositories",
         "Unlimited scans",
         "AI-powered auto-fixes",
         "Email support",
@@ -87,33 +86,31 @@
       ]
     },
     "pro": {
-      "name": "Pro",
-      "badge": "MOST POPULAR",
+      "name": "Team",
+      "badge": "POPULAR",
       "price": "$99",
       "period": "/mo",
-      "subtext": "For growing teams",
+      "subtext": "For startups",
       "features": [
-        "15 repositories",
+        "Everything in Solo",
+        "Team management",
         "CI/CD integration",
-        "Trend tracking & reports",
         "Priority support",
-        "$30/month AI credit",
-        "Slack notifications"
+        "$30/month AI credit"
       ]
     },
     "team": {
-      "name": "Team",
+      "name": "Enterprise",
       "badge": "",
       "price": "$299",
       "period": "/mo",
-      "subtext": "For engineering orgs",
+      "subtext": "For scale",
       "features": [
-        "50 repositories",
-        "CI/CD gatekeeper",
-        "SSO & team management",
-        "Dedicated support",
-        "$100/month AI credit",
-        "Custom rules & policies"
+        "50+ repositories",
+        "SSO & audit logs",
+        "Dedicated infrastructure",
+        "24/7 support",
+        "$100/month AI credit"
       ]
     },
     "tax": {
