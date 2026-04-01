@@ -74,8 +74,8 @@ export function generateHTMLReport(
     {
       title: 'Context Analysis Report',
       packageName: 'context-analyzer',
-      packageUrl: 'https://github.com/caopengau/aiready-context-analyzer',
-      bugUrl: 'https://github.com/caopengau/aiready-context-analyzer/issues',
+      packageUrl: 'https://github.com/getaiready/aiready-context-analyzer',
+      bugUrl: 'https://github.com/getaiready/aiready-context-analyzer/issues',
       emoji: '🧠',
     },
     stats,

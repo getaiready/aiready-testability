@@ -99,12 +99,12 @@ export function displayConsoleReport(
   console.log(chalk.cyan(divider));
   console.log(
     chalk.dim(
-      '\n⭐ Like aiready? Star us on GitHub: https://github.com/caopengau/aiready-context-analyzer'
+      '\n⭐ Like aiready? Star us on GitHub: https://github.com/getaiready/aiready-context-analyzer'
     )
   );
   console.log(
     chalk.dim(
-      '🐛 Found a bug? Report it: https://github.com/caopengau/aiready-context-analyzer/issues\n'
+      '🐛 Found a bug? Report it: https://github.com/getaiready/aiready-context-analyzer/issues\n'
     )
   );
 }
