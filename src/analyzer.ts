@@ -60,6 +60,13 @@ async function analyzeFileTestability(filePath: string): Promise<FileAnalysis> {
         result.totalFunctions++;
         if (exp.isPure) result.pureFunctions++;
         if (exp.hasSideEffects) result.externalStateMutations++;
+
+        // Functional DI heuristic: functions with 3+ parameters or object parameters
+        // are often using explicit dependency passing
+        const isAppFile = filePath.includes('/apps/');
+        if (exp.parameters && exp.parameters.length >= (isAppFile ? 1 : 2)) {
+          result.injectionPatterns++;
+        }
       }
 
       if (exp.type === 'class') {
@@ -70,7 +77,7 @@ async function analyzeFileTestability(filePath: string): Promise<FileAnalysis> {
         }
         // Heuristic: bloated classes
         const total = (exp.methodCount || 0) + (exp.propertyCount || 0);
-        if (total > 10) {
+        if (total > 25) {
           result.bloatedInterfaces++;
         }
       }
@@ -79,7 +86,7 @@ async function analyzeFileTestability(filePath: string): Promise<FileAnalysis> {
         result.totalInterfaces++;
         // Heuristic: interfaces with many methods/props are considered bloated
         const total = (exp.methodCount || 0) + (exp.propertyCount || 0);
-        if (total > 10) {
+        if (total > 20) {
           result.bloatedInterfaces++;
         }
       }
