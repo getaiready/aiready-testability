@@ -18,7 +18,7 @@ export interface TestabilityOptions {
 }
 
 export interface TestabilityIssue extends Issue {
-  type: IssueType.LowTestability;
+  type: IssueType.LowTestability | IssueType.ParameterObject;
   /** Category of testability barrier */
   dimension:
     | 'test-coverage'
@@ -26,7 +26,8 @@ export interface TestabilityIssue extends Issue {
     | 'dependency-injection'
     | 'interface-focus'
     | 'observability'
-    | 'framework';
+    | 'framework'
+    | 'parameter-surface';
 }
 
 export interface TestabilityReport {

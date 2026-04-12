@@ -28,6 +28,7 @@ interface FileAnalysis {
   bloatedInterfaces: number;
   totalInterfaces: number;
   externalStateMutations: number;
+  parameterBloat: number;
 }
 
 async function analyzeFileTestability(filePath: string): Promise<FileAnalysis> {
@@ -39,6 +40,7 @@ async function analyzeFileTestability(filePath: string): Promise<FileAnalysis> {
     bloatedInterfaces: 0,
     totalInterfaces: 0,
     externalStateMutations: 0,
+    parameterBloat: 0,
   };
 
   const parser = await getParser(filePath);
@@ -66,6 +68,11 @@ async function analyzeFileTestability(filePath: string): Promise<FileAnalysis> {
         const isAppFile = filePath.includes('/apps/');
         if (exp.parameters && exp.parameters.length >= (isAppFile ? 1 : 2)) {
           result.injectionPatterns++;
+        }
+
+        // Parameter bloat: functions with >3 parameters should use options object
+        if (exp.parameters && exp.parameters.length > 3) {
+          result.parameterBloat++;
         }
       }
 
@@ -124,6 +131,7 @@ export async function analyzeTestability(
     bloatedInterfaces: 0,
     totalInterfaces: 0,
     externalStateMutations: 0,
+    parameterBloat: 0,
   };
 
   // Collect file-level details for smarter scoring
@@ -260,6 +268,18 @@ export async function analyzeTestability(
       location: { file: options.rootDir, line: 0 },
       suggestion:
         'Split large interfaces into smaller, focused ones (Interface Segregation Principle).',
+    });
+  }
+
+  if (aggregated.parameterBloat > 0) {
+    issues.push({
+      type: IssueType.ParameterObject,
+      dimension: 'parameter-surface',
+      severity: Severity.Major,
+      message: `Found ${aggregated.parameterBloat} function(s) with more than 3 parameters — consider using an options object for better readability and extensibility.`,
+      location: { file: options.rootDir, line: 0 },
+      suggestion:
+        'Group related parameters into an options object: function(id, { name, age, email }) instead of function(id, name, age, email)',
     });
   }
 
